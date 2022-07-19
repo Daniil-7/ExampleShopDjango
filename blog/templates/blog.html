@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Блог{% endblock %}
+
+{% block content %}
+     <main role="main">
+<div class="container">
+{% for page in blogs %}
+<br>
+<div class="row justify-content-center align-items-center">
+<div class="card"><!-- style="width: 24rem;"-->
+  <img src="{{ page.image.url }}" class="card-img-top" alt="Картинка Товара">
+  <div class="card-body text-center">
+    <h5 class="card-title">{{ page.title }}</h5>
+    <a href="/blog/page/{{ page.id }}" class="btn btn-primary">Читать</a>
+  </div>
+</div>
+</div>
+<br>
+{% endfor %}
+</div>
+    </main>
+{% endblock %}

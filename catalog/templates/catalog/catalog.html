@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% endblock %}
+{% block addhead %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+{% endblock %}
+
+{% block content %}
+    <main role="main">
+        <div class="container">
+            {% block catalog %}{% endblock %}
+        </div>
+    </main>
+{% endblock %}

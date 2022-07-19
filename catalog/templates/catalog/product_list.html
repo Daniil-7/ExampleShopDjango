@@ -1,0 +1,106 @@
+{% extends 'catalog/catalog.html' %}
+{% block title %}
+    {{ category.name }}
+{% endblock %}
+{% block catalog %}
+
+
+<h1 class="text-center">{{ category.name }}</h1>
+<hr><br>
+<div id="otherCategory" class="container"></div>
+
+
+<script>
+ {% load mptt_tags %}
+ var underCategoryArr = new Array();
+ var level = 1
+ {% for genre,structure in catalog|tree_info:"ancestors" %}
+      var n = 0
+      var trueName = ""
+      var trueUrl = ""
+      {% for i in structure.ancestors %}
+      n += 1
+      if ("{{genre.name}}" == "{{category.name}}") {
+        level += 1
+      }
+      if ("{{category.name}}" == "{{i}}") {
+      trueName = "{{genre.name}}"
+      trueUrl = "{{genre.get_absolute_url}}"
+      trueImage = "{{genre.image.url}}"
+      }
+        {% endfor %}
+      if (trueName != "") {
+        if (n == level) {
+          underCategoryArr.push([trueName, trueUrl, trueImage])
+        }
+      }
+    {% endfor %}
+  var otherCategory = document.getElementById('otherCategory')
+  if (underCategoryArr.length != 0) {
+    otherCategory.innerHTML = '<h3 class="text-center">Подкатигории</h3><ul class="row" id="underC"></ul>'
+    var underCategory = document.getElementById('underC')
+    for (var i = 0; i != underCategoryArr.length; i++) {
+       underCategory.insertAdjacentHTML(
+        'beforeend',
+        '<div class="card col-md-4">' + 
+        '<img class="card-img-top" src="' + underCategoryArr[i][2] + '" alt="Card image cap">' +
+        '<div class="card-body">' +
+        '<h5 class="card-title">' + underCategoryArr[i][0] + '</h5>' +
+        '<a href="' + underCategoryArr[i][1] + '" class="btn btn-primary">Перейти</a></div></div>&nbsp;&nbsp;'
+         )
+    }
+  }
+</script>
+
+
+    <!--<h1 class="text-center">{{ category.name }}</h1>-->
+    {% if products_list %}
+        <h3 class="text-center">Товары</h3>
+        <div class="row container">
+        {% for product in page_obj %}
+        <div class="col-md-4 card">
+            <a href="{{product.image.url}}" data-toggle="lightbox" data-gallery="example-gallery">
+              <img src="{{product.image.url}}" class="img-fluid card-img-top">
+            </a>
+            <a href="{{ product.get_absolute_url}}">
+            <h3 class="card-title">{{ product.title }}</h3>
+            </a>
+            <ul class="list-group list-group-flush">
+             <li class="list-group-item">Цена: {{ product.price }} рублей</li>
+             {% if product.valsale %}
+             <li class="list-group-item">Скидка: {{ product.htmlprice }}</li>
+             <li class="list-group-item">Итоговая цена: {{ product.saleprice }} рублей</li>
+             {% endif %}
+        </ul>
+        </div>
+        &nbsp;&nbsp;
+    {% endfor %}
+    </div>
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; В начало</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">назад</a>
+                {% endif %}
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">след.</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">пред. &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+  {% else %}
+
+        <!--<div class="alert alert-dark" role="alert">
+            Тут пока ничего нет!
+        </div> -->
+    {% endif %}
+<script type="text/javascript">
+  $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+      event.preventDefault();
+      $(this).ekkoLightbox();
+  });
+</script>
+{% endblock %}

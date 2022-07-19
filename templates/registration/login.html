@@ -1,0 +1,18 @@
+{% extends 'base_registration.html' %}
+
+{% block form %}
+<form method="post" class="form-signin">
+    <h1 class="h3 mb-3 font-weight-normal ">Вход</h1>
+    <div class="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    </div>
+    <br>
+    <input type="submit" value="войти" class='btn btn-lg btn-primary btn-block'>
+    <p class="mt-5 mb-3 text-muted">
+      <a href="/account/register/">Зарегистрироваться</a>&nbsp;&nbsp;
+      <a href="/account/password_reset/">Востановить пароль</a>&nbsp;&nbsp;
+      <br><a href="/">Вернутся на главную</a>
+    </p>
+</form>
+{% endblock %}

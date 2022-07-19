@@ -1,0 +1,107 @@
+{% extends 'catalog/catalog.html' %}
+{% load static %}
+{% load catalog_extras %}
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+{% block catalog %}
+
+
+<style type="text/css">
+.row {
+  margin: 15px;
+}
+</style>
+
+
+<div class="container mt-3">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center">{{ product.title }} </h1>
+
+      
+
+   <div class="col-md-8">
+    <a href="{{product.image.url}}" data-toggle="lightbox" data-gallery="example-gallery">
+      <img src="{{product.image.url}}" class="img-fluid">
+    </a>
+  </div>
+  <div class="row">
+  {% if product.image2 %}
+  <div class="col-md-4 col">
+    <a href="{{product.image2.url}}" data-toggle="lightbox" data-gallery="example-gallery">
+      <img src="{{product.image2.url}}" class="img-fluid">
+    </a>
+  </div>
+  {% endif %}
+  {% if product.image3 %}
+  <div class="col-md-4 col">
+    <a href="{{product.image3.url}}" data-toggle="lightbox" data-gallery="example-gallery">
+      <img src="{{product.image3.url}}" class="img-fluid">
+    </a>
+  </div>
+  {% endif %}
+  {% if product.image4 %}
+  <div class="col-md-4 col">
+    <a href="{{product.image4.url}}" data-toggle="lightbox" data-gallery="example-gallery">
+      <img src="{{product.image4.url}}" class="img-fluid">
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+
+  
+ <script type="text/javascript">
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
+  </script>
+
+
+
+
+
+
+        <p>{{ product.description }}</p>
+        <div class="card">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Цена: {{ product.price }} рублей</li>
+            {% if product.valsale %}
+            <li class="list-group-item">Скидка: {{ product.htmlprice }}</li>
+            <li class="list-group-item">Итоговая цена: {{ product.saleprice }} рублей</li>
+            {% endif %}
+          </ul>
+        </div>
+
+        {% include 'add_to_cart_detail.html' %}
+      </div>
+    </div>
+    <hr>
+    {% for reviews in product.reviews.get_queryset%}
+        <p>{{ reviews.rating|view_rating }}</p>
+        <span>{{ reviews.name }}</span>
+    <p> {{ reviews.review }}</p>
+        <hr>
+    {% endfor %}
+     {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-lg-6 col-md-8 col-sm-12">
+        <h4>Оставьте отзыв:</h4>
+            <form action="{{ product.get_absolute_url }}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="content">Ваш отзыв:</label>
+                    {{ form.review }}
+                </div>
+                {% for raiting in form.rating %}
+                    {{ raiting }}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Оставить</button>
+            </form>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

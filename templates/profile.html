@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+<div class="text-center container">
+<h1 class="h3 mb-3 font-weight-normal text-center"><b>Профиль</b></h1>
+<div class="card col-md-4 mx-auto">
+  <div class="card-body">
+    <a href="/account/profile/newemail/">Изменить почту</a>
+  </div>
+</div>
+<div class="card col-md-4 mx-auto">
+  <div class="card-body">
+    <a href="/account/profile/newusername/">Изменить ник</a>
+  </div>
+</div>
+<div class="card col-md-4 mx-auto">
+  <div class="card-body">
+    <a href="/account/profile/newfullname/">Изменить имя и фамилию</a>
+  </div>
+</div>
+<div class="card col-md-4 mx-auto">
+  <div class="card-body">
+    <a href="/account/profile/newphone/">Изменить номер телефона</a>
+  </div>
+</div>
+<div class="card col-md-4 mx-auto">
+  <div class="card-body">
+    <a href="/account/password_change/">Изменить пароль</a>
+  </div>
+</div>
+</div>
+{% endblock %}

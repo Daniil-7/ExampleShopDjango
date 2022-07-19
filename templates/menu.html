@@ -1,0 +1,63 @@
+{% load static %}
+{% load catalog_extras %}
+<style type="text/css">
+li {
+  list-style-type: none;
+}
+
+ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+</style>
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark navbar-fixed-top">
+  <a class="navbar-brand" href="{% url 'home' %}">Просто магазин</a>
+  <!--<img src="{% static 'logo.svg' %}" alt="" width="42" height="42">-->
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+          data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">
+          Главная
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/contacts/">
+          Контакты
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/blog/">
+          Блог
+        </a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/event/">
+          Aкции
+        </a>
+      </li>
+        {% include 'catalog/catalog_menu.html' %}
+    <li class="form-inline my-2 my-lg-0">
+    <form action="{% url 'search_results' %}" method="get">
+      <input name="q" type="text" placeholder="Искать товар...">
+    </form></li>
+    </ul>
+    
+    {% if user.is_authenticated %}
+        <div class="text-success">Пользователь: {{ user.last_name }} {{ user.first_name }}</div>
+    {% endif %}
+    &nbsp;&nbsp;
+    <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="/cart/">Корзина</a> <!-- url 'cart:cart' -->
+    {% if user.is_authenticated %}
+        <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
+        <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="/account/profile/">Профиль</a>
+    {% else %}
+        <a class="btn btn-outline-success my-2 my-sm-0" role="button" href="{% url 'login'%}?next={{request.path}}">Войти</a>
+    {% endif %}
+    </div>
+</nav>

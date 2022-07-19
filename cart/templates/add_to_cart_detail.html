@@ -1,0 +1,14 @@
+{% if product.count > 0 %}
+<form action="{% url 'cart:add_to_cart' %}?product_id={{ product.id }}&next={{ request.path }}" method="post">
+    {% csrf_token %}
+    
+    <input type="submit" class="btn btn-secondary" value="Добавить в корзину »">
+</form>
+{% endif %}
+{% if product.count < 1 %}
+<form action="{% url 'cart:notify_product_cart' %}?product_title={{ product.title }}&next={{ request.path }}" method="post">
+    {% csrf_token %}
+    
+    <input type="submit" class="btn btn-secondary" value="Уведомить о отсутсвии товара »">
+</form>
+{% endif %}

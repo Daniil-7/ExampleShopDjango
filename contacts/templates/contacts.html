@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<style type="text/css">
+label {
+  display: block;
+}
+</style>
+     <div class="container text-center">
+        <h1>Написать нам</h1>
+        {% if valSend %}
+        <h4>Сообщение отправлено</h4>
+        {% endif %}
+     	<form method="post">
+     	{% csrf_token %}
+        {% for field, errors in formOld.errors.items %}
+        {% for error in errors %}
+        {{ error }}
+        {% endfor %}
+        {% endfor %}
+     	{{ form }}
+     	<br>
+     	<button type="submit" class="btn btn-primary">Отправить</button>
+     	</form>
+    </div>
+{% endblock %}

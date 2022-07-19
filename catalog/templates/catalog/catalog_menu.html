@@ -1,0 +1,25 @@
+{% load mptt_tags %}
+
+<li class="nav-item dropdown" id="mainli"></li>
+
+
+ <script>
+ var mainLevel = new Array();
+ {% for genre,structure in catalog|tree_info:"ancestors" %}
+   {% if not structure.ancestors %}
+     mainLevel.push("{{genre.name}}")
+   {% endif %}
+ {% endfor %}
+ var mainLi = document.getElementById('mainli')
+  if (mainLevel.length) {
+   mainLi.innerHTML = '<a class="nav-link dropdown-toggle" href="{{ genre.get_absolute_url }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Каталоги</a><div class="dropdown-menu" aria-labelledby="dropdown01" id="menuid"><a class="dropdown-item" href="/catalog_main/">Все каталоги</a></div>'
+   var menuid = document.getElementById('menuid')
+  }
+  {% for genre,structure in catalog|tree_info:"ancestors" %}
+    {% if not structure.ancestors %}
+      if (mainLevel.length) {
+        menuid.insertAdjacentHTML('beforeend', '<a class="dropdown-item" href="{{genre.get_absolute_url}}">{{genre.name}}</a>')
+      } 
+    {% endif %}
+  {% endfor %}
+</script>

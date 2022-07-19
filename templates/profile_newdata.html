@@ -1,0 +1,27 @@
+{% extends 'base_registration.html' %}
+{% block form %}
+<div class="container">
+{% if user.is_authenticated %}
+<form method="post" class="form-signin">
+   {% csrf_token %}
+    <h1 class="h3 mb-3 font-weight-normal">Измененить {{ title }}</h1>
+    {% if val %}
+    <b>Данные Изменены</b>
+    {% endif %}
+    <div class="">
+    {% for field, errors in formOld.errors.items %}
+        {% for error in errors %}
+        {{ error }}
+        {% endfor %}
+        {% endfor %}
+    {{form}}
+    </div>
+    <br>
+    <input type="submit" value="Изменить" class='btn btn-lg btn-primary btn-block'>
+    <p class="mt-5 mb-3 text-muted"><a href="/account/profile/">Назад</a></p>
+</form>
+{% else %}
+<h1 class="h3 mb-3 font-weight-normal">Вы не вошли в аккаунт</h1>
+{% endif %}
+</div>
+{% endblock %}
