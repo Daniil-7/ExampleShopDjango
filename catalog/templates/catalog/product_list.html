@@ -42,9 +42,9 @@
     for (var i = 0; i != underCategoryArr.length; i++) {
        underCategory.insertAdjacentHTML(
         'beforeend',
-        '<div class="card col-md-4">' + 
+        '<div class="card">' + 
         '<img class="card-img-top" src="' + underCategoryArr[i][2] + '" alt="Card image cap">' +
-        '<div class="card-body">' +
+        '<div class="card-body text-center">' +
         '<h5 class="card-title">' + underCategoryArr[i][0] + '</h5>' +
         '<a href="' + underCategoryArr[i][1] + '" class="btn btn-primary">Перейти</a></div></div>&nbsp;&nbsp;'
          )
@@ -73,7 +73,6 @@
              {% endif %}
         </ul>
         </div>
-        &nbsp;&nbsp;
     {% endfor %}
     </div>
         <div class="pagination">
